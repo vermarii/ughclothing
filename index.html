@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UGH — THE BRAND</title>
+<link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Bebas+Neue&family=Permanent+Marker&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --yellow: #F5C800;
+    --red: #D63B2F;
+    --green: #1A7A3C;
+    --blue: #1B4FBF;
+    --orange: #E85D20;
+    --black: #0A0A0A;
+    --white: #F9F5E8;
+    --checker: repeating-conic-gradient(#0A0A0A 0% 25%, #F5C800 0% 50%) 0 0 / 24px 24px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background-color: var(--black);
+    color: var(--white);
+    font-family: 'Space Mono', monospace;
+    overflow-x: hidden;
+    cursor: crosshair;
+  }
+
+  /* NOISE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.05'/%3E%3C/svg%3E");
+    opacity: 0.4;
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 2.5rem;
+    background: var(--black);
+    border-bottom: 3px solid var(--yellow);
+    mix-blend-mode: normal;
+  }
+
+  .nav-logo {
+    font-family: 'Black Ops One', cursive;
+    font-size: 2.2rem;
+    color: var(--yellow);
+    letter-spacing: 0.1em;
+    text-decoration: none;
+    text-shadow: 3px 3px 0 var(--red);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--white);
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    border-bottom: 2px solid transparent;
+    padding-bottom: 2px;
+    transition: color 0.15s, border-color 0.15s;
+  }
+
+  .nav-links a:hover {
+    color: var(--yellow);
+    border-color: var(--yellow);
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-top: 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 3px,
+      rgba(245,200,0,0.03) 3px,
+      rgba(245,200,0,0.03) 4px
+    );
+    pointer-events: none;
+  }
+
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 4rem 3rem 4rem 4rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-eyebrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    color: var(--yellow);
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    opacity: 0.8;
+  }
+
+  .hero-title {
+    font-family: 'Black Ops One', cursive;
+    font-size: clamp(5rem, 12vw, 10rem);
+    line-height: 0.9;
+    color: var(--white);
+    text-transform: uppercase;
+    position: relative;
+    margin-bottom: 1rem;
+  }
+
+  .hero-title span.accent {
+    color: var(--yellow);
+    display: block;
+    -webkit-text-stroke: 2px var(--yellow);
+    color: transparent;
+    font-size: clamp(3rem, 8vw, 7rem);
+  }
+
+  .hero-desc {
+    font-size: 0.8rem;
+    line-height: 1.8;
+    color: rgba(249,245,232,0.55);
+    max-width: 380px;
+    margin-bottom: 2.5rem;
+    margin-top: 1rem;
+  }
+
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: var(--yellow);
+    color: var(--black);
+    font-family: 'Bebas Neue', cursive;
+    font-size: 1.3rem;
+    letter-spacing: 0.1em;
+    padding: 1rem 2.5rem;
+    text-decoration: none;
+    border: 3px solid var(--yellow);
+    position: relative;
+    transition: all 0.12s;
+  }
+
+  .hero-cta::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    right: -5px;
+    width: 100%;
+    height: 100%;
+    border: 3px solid var(--red);
+    z-index: -1;
+    transition: all 0.12s;
+  }
+
+  .hero-cta:hover {
+    transform: translate(-3px, -3px);
+  }
+
+  .hero-cta:hover::after {
+    transform: translate(6px, 6px);
+  }
+
+  .hero-right {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-right img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    filter: contrast(1.1) saturate(1.2);
+    display: block;
+  }
+
+  .hero-right::before {
+    content: 'UGH™';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Black Ops One', cursive;
+    font-size: 18rem;
+    color: rgba(245,200,0,0.08);
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 1;
+    letter-spacing: -0.05em;
+  }
+
+  .hero-tag {
+    position: absolute;
+    bottom: 2rem;
+    left: 2rem;
+    background: var(--red);
+    color: var(--white);
+    font-family: 'Bebas Neue', cursive;
+    font-size: 1rem;
+    letter-spacing: 0.1em;
+    padding: 0.4rem 1rem;
+    z-index: 10;
+    transform: rotate(-2deg);
+  }
+
+  /* MARQUEE */
+  .marquee-wrap {
+    background: var(--yellow);
+    padding: 0.9rem 0;
+    overflow: hidden;
+    white-space: nowrap;
+    border-top: 3px solid var(--black);
+    border-bottom: 3px solid var(--black);
+  }
+
+  .marquee-inner {
+    display: inline-block;
+    animation: marquee 18s linear infinite;
+  }
+
+  .marquee-inner span {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 1.4rem;
+    letter-spacing: 0.15em;
+    color: var(--black);
+    padding: 0 2rem;
+  }
+
+  .marquee-inner span.dot {
+    color: var(--red);
+  }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* SECTION SHARED */
+  section { padding: 6rem 4rem; }
+
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.35em;
+    color: var(--yellow);
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    opacity: 0.7;
+  }
+
+  .section-title {
+    font-family: 'Black Ops One', cursive;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    line-height: 1;
+    text-transform: uppercase;
+    margin-bottom: 3rem;
+  }
+
+  /* ABOUT */
+  #about {
+    background: var(--black);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+    padding: 6rem 4rem;
+  }
+
+  .about-img-wrap {
+    position: relative;
+  }
+
+  .about-img-wrap img {
+    width: 100%;
+    display: block;
+    filter: contrast(1.15) saturate(1.1);
+    border: 4px solid var(--yellow);
+  }
+
+  .about-img-wrap::before {
+    content: '';
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    width: 100%;
+    height: 100%;
+    border: 4px solid var(--red);
+    z-index: -1;
+  }
+
+  .about-text p {
+    font-size: 0.85rem;
+    line-height: 2;
+    color: rgba(249,245,232,0.65);
+    margin-bottom: 1.5rem;
+  }
+
+  .about-text p strong {
+    color: var(--yellow);
+    font-weight: 700;
+  }
+
+  .about-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 2rem;
+  }
+
+  .tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.35rem 0.8rem;
+    border: 1.5px solid;
+  }
+
+  .tag-y { border-color: var(--yellow); color: var(--yellow); }
+  .tag-r { border-color: var(--red); color: var(--red); }
+  .tag-g { border-color: var(--green); color: #4dbd70; }
+  .tag-b { border-color: #4d82ff; color: #4d82ff; }
+  .tag-o { border-color: var(--orange); color: var(--orange); }
+
+  /* CHECKER DIVIDER */
+  .checker-bar {
+    height: 32px;
+    background: var(--checker);
+    border-top: 3px solid var(--black);
+    border-bottom: 3px solid var(--black);
+  }
+
+  /* GALLERY */
+  #work {
+    background: #0d0d0d;
+    padding: 6rem 4rem;
+  }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border: 3px solid var(--yellow);
+  }
+
+  .gallery-item {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 4/5;
+    cursor: pointer;
+  }
+
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: saturate(0.85) contrast(1.1);
+    transition: filter 0.3s, transform 0.4s;
+    display: block;
+  }
+
+  .gallery-item:hover img {
+    filter: saturate(1.3) contrast(1.15);
+    transform: scale(1.04);
+  }
+
+  .gallery-item-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 1.5rem;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .gallery-item:hover .gallery-item-overlay {
+    opacity: 1;
+  }
+
+  .gallery-item-label {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 1.4rem;
+    letter-spacing: 0.1em;
+    color: var(--yellow);
+  }
+
+  .gallery-item-sub {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: rgba(255,255,255,0.6);
+    text-transform: uppercase;
+    margin-top: 0.3rem;
+  }
+
+  .gallery-item:nth-child(1) { border-right: 3px solid var(--yellow); border-bottom: 3px solid var(--yellow); }
+  .gallery-item:nth-child(2) { border-right: 3px solid var(--yellow); border-bottom: 3px solid var(--yellow); }
+  .gallery-item:nth-child(3) { border-bottom: 3px solid var(--yellow); }
+  .gallery-item:nth-child(4) { border-right: 3px solid var(--yellow); }
+  .gallery-item:nth-child(5) { border-right: 3px solid var(--yellow); }
+
+  .gallery-caption {
+    background: var(--yellow);
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .gallery-caption span {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 1.1rem;
+    letter-spacing: 0.12em;
+    color: var(--black);
+  }
+
+  /* COMING SOON / MERCH */
+  #merch {
+    background: var(--yellow);
+    padding: 6rem 4rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  #merch::before {
+    content: 'SOON';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Black Ops One', cursive;
+    font-size: 22rem;
+    color: rgba(0,0,0,0.06);
+    white-space: nowrap;
+    pointer-events: none;
+  }
+
+  #merch .section-label { color: var(--red); }
+
+  #merch .section-title {
+    color: var(--black);
+    font-size: clamp(3rem, 8vw, 7rem);
+  }
+
+  .merch-desc {
+    font-size: 0.85rem;
+    color: rgba(0,0,0,0.6);
+    line-height: 1.9;
+    max-width: 480px;
+    margin: 0 auto 3rem;
+  }
+
+  .notify-form {
+    display: flex;
+    max-width: 480px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+  }
+
+  .notify-form input {
+    flex: 1;
+    background: var(--black);
+    border: 3px solid var(--black);
+    color: var(--white);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.8rem;
+    padding: 1rem 1.2rem;
+    outline: none;
+  }
+
+  .notify-form input::placeholder { color: rgba(255,255,255,0.3); }
+
+  .notify-form button {
+    background: var(--red);
+    border: 3px solid var(--black);
+    color: var(--white);
+    font-family: 'Bebas Neue', cursive;
+    font-size: 1.2rem;
+    letter-spacing: 0.12em;
+    padding: 1rem 2rem;
+    cursor: pointer;
+    transition: background 0.15s;
+    border-left: none;
+  }
+
+  .notify-form button:hover { background: #b82e23; }
+
+  .merch-preview {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+  }
+
+  .merch-card {
+    background: var(--black);
+    border: 3px solid var(--black);
+    width: 200px;
+    padding: 2rem 1.5rem;
+    position: relative;
+    transform: rotate(-1.5deg);
+    transition: transform 0.2s;
+  }
+
+  .merch-card:nth-child(2) { transform: rotate(1deg); }
+  .merch-card:nth-child(3) { transform: rotate(-0.5deg); }
+  .merch-card:hover { transform: rotate(0deg) scale(1.05); }
+
+  .merch-card-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+
+  .merch-card-name {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 1.2rem;
+    letter-spacing: 0.1em;
+    color: var(--yellow);
+    text-align: center;
+    margin-bottom: 0.3rem;
+  }
+
+  .merch-card-status {
+    font-size: 0.6rem;
+    letter-spacing: 0.25em;
+    color: rgba(255,255,255,0.3);
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  .merch-card-badge {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background: var(--red);
+    color: var(--white);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.1em;
+    padding: 0.3rem 0.5rem;
+    transform: rotate(8deg);
+    text-transform: uppercase;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--black);
+    border-top: 3px solid var(--yellow);
+    padding: 3rem 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+  }
+
+  .footer-logo {
+    font-family: 'Black Ops One', cursive;
+    font-size: 3rem;
+    color: var(--yellow);
+    text-shadow: 3px 3px 0 var(--red);
+    letter-spacing: 0.05em;
+  }
+
+  .footer-copy {
+    font-size: 0.65rem;
+    color: rgba(255,255,255,0.25);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 1.5rem;
+    list-style: none;
+  }
+
+  .footer-links a {
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: rgba(255,255,255,0.4);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.15s;
+  }
+
+  .footer-links a:hover { color: var(--yellow); }
+
+  /* SCROLL ANIMATIONS */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* GLITCH */
+  .glitch {
+    position: relative;
+  }
+
+  .glitch::before, .glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+  }
+
+  .glitch::before {
+    color: var(--red);
+    animation: glitch1 4s infinite;
+    clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+  }
+
+  .glitch::after {
+    color: var(--blue);
+    animation: glitch2 4s infinite;
+    clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+  }
+
+  @keyframes glitch1 {
+    0%, 90%, 100% { transform: translate(0); }
+    92% { transform: translate(-3px, 1px); }
+    94% { transform: translate(3px, -1px); }
+    96% { transform: translate(-2px, 2px); }
+  }
+
+  @keyframes glitch2 {
+    0%, 90%, 100% { transform: translate(0); }
+    91% { transform: translate(3px, 1px); }
+    93% { transform: translate(-3px, -1px); }
+    95% { transform: translate(2px, -2px); }
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero-right { min-height: 60vw; }
+    #about { grid-template-columns: 1fr; }
+    .gallery-grid { grid-template-columns: 1fr 1fr; }
+    .gallery-item:nth-child(3) { display: none; }
+    section, nav { padding-left: 1.5rem; padding-right: 1.5rem; }
+    #about { padding: 4rem 1.5rem; }
+    #merch { padding: 5rem 1.5rem; }
+    footer { padding: 2rem 1.5rem; flex-direction: column; text-align: center; }
+    .notify-form { flex-direction: column; }
+    .notify-form input { width: 100%; }
+    .notify-form button { border-left: 3px solid var(--black); border-top: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">UGH<sup style="font-size:0.4em;vertical-align:super;letter-spacing:0;">™</sup></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#merch">Merch</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <p class="hero-eyebrow">Est. Now. Forever Louder.</p>
+    <h1 class="hero-title glitch" data-text="UGH™">
+      UGH<sup style="font-size:0.25em;vertical-align:super;">™</sup>
+      <span class="accent">THE BRAND</span>
+    </h1>
+    <p class="hero-desc">Not a character. Not a costume. A state of being. UGH is the scream you've been holding in — finally dressed and ready to walk out the door.</p>
+    <a href="#work" class="hero-cta">See the Work →</a>
+  </div>
+  <div class="hero-right">
+    <img src="Man_sit_down_202604121835.jpeg" alt="UGH character seated with unicorn and toys">
+    <div class="hero-tag">UGH™ Portfolio 2025</div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-inner">
+    <span>UGH™ THE BRAND</span><span class="dot">✦</span>
+    <span>ART & CHAOS</span><span class="dot">✦</span>
+    <span>STREETWEAR COMING SOON</span><span class="dot">✦</span>
+    <span>LOUD BY DESIGN</span><span class="dot">✦</span>
+    <span>UGH™ THE BRAND</span><span class="dot">✦</span>
+    <span>ART & CHAOS</span><span class="dot">✦</span>
+    <span>STREETWEAR COMING SOON</span><span class="dot">✦</span>
+    <span>LOUD BY DESIGN</span><span class="dot">✦</span>
+    <span>UGH™ THE BRAND</span><span class="dot">✦</span>
+    <span>ART & CHAOS</span><span class="dot">✦</span>
+    <span>STREETWEAR COMING SOON</span><span class="dot">✦</span>
+    <span>LOUD BY DESIGN</span><span class="dot">✦</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-img-wrap fade-up">
+    <img src="657166530_17914467162340906_4422814459886936684_n.jpg" alt="UGH close-up face">
+  </div>
+  <div class="about-text fade-up">
+    <p class="section-label">Who is UGH</p>
+    <h2 class="section-title">Born From Noise. Dressed in Color.</h2>
+    <p>UGH is a <strong>visual identity, performance character, and emerging clothing brand</strong> built on one principle: nothing should be boring. Every piece, every image, every drop is designed to make you feel something — even if that feeling is confusion.</p>
+    <p>The character bleeds from performance art into fashion, from street into gallery, from toy chest into wardrobe. If it's loud, layered, and a little unhinged — it's UGH.</p>
+    <p>Merch is <strong>coming soon</strong>. Tees, hoodies, and things we haven't named yet. Stay close.</p>
+    <div class="about-tags">
+      <span class="tag tag-y">Performance Art</span>
+      <span class="tag tag-r">Streetwear</span>
+      <span class="tag tag-g">Visual Identity</span>
+      <span class="tag tag-b">Costume</span>
+      <span class="tag tag-o">Photography</span>
+    </div>
+  </div>
+</section>
+
+<!-- CHECKER -->
+<div class="checker-bar"></div>
+
+<!-- WORK -->
+<section id="work">
+  <p class="section-label fade-up">Portfolio</p>
+  <h2 class="section-title fade-up">The Work</h2>
+  <div class="gallery-grid fade-up">
+    <div class="gallery-item">
+      <img src="Man_sit_down_202604121835.jpeg" alt="UGH seated">
+      <div class="gallery-item-overlay">
+        <p class="gallery-item-label">The Throne</p>
+        <p class="gallery-item-sub">Character Study · 2025</p>
+      </div>
+    </div>
+    <div class="gallery-item">
+      <img src="657166530_17914467162340906_4422814459886936684_n.jpg" alt="UGH face close-up" style="object-position: center center;">
+      <div class="gallery-item-overlay">
+        <p class="gallery-item-label">The Scream</p>
+        <p class="gallery-item-sub">Face · 2025</p>
+      </div>
+    </div>
+    <div class="gallery-item">
+      <img src="Man_sit_down_202604121835.jpeg" alt="UGH detail" style="object-position: right center; filter: contrast(1.3) saturate(0.3) hue-rotate(30deg);">
+      <div class="gallery-item-overlay">
+        <p class="gallery-item-label">Noise & Color</p>
+        <p class="gallery-item-sub">Editorial · 2025</p>
+      </div>
+    </div>
+    <div class="gallery-item" style="aspect-ratio: auto; min-height: 280px; background: var(--yellow); display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 1rem;">
+      <p style="font-family: 'Black Ops One', cursive; font-size: 5rem; color: var(--black); line-height: 1;">UGH™</p>
+      <p style="font-size: 0.65rem; letter-spacing: 0.3em; color: rgba(0,0,0,0.5); text-transform: uppercase;">Est. Now</p>
+    </div>
+    <div class="gallery-item" style="aspect-ratio: auto; min-height: 280px; background: var(--red); display: flex; align-items: center; justify-content: center;">
+      <p style="font-family: 'Permanent Marker', cursive; font-size: 1.5rem; color: var(--white); text-align: center; padding: 2rem; line-height: 1.7; opacity: 0.9;">"Not a character.<br>A state of being."</p>
+    </div>
+    <div class="gallery-item">
+      <img src="657166530_17914467162340906_4422814459886936684_n.jpg" alt="UGH detail" style="filter: contrast(1.4) saturate(1.5) invert(0.05);">
+      <div class="gallery-item-overlay">
+        <p class="gallery-item-label">Spiral</p>
+        <p class="gallery-item-sub">Macro · 2025</p>
+      </div>
+    </div>
+  </div>
+  <div class="gallery-caption">
+    <span>More coming soon — follow for updates</span>
+    <span>2025 ©</span>
+  </div>
+</section>
+
+<!-- CHECKER -->
+<div class="checker-bar"></div>
+
+<!-- MERCH / COMING SOON -->
+<section id="merch">
+  <p class="section-label">Clothing & Merch</p>
+  <h2 class="section-title">Drop<br>Incoming.</h2>
+  <p class="merch-desc">Tees, hoodies, and pieces that shouldn't exist but do. The UGH clothing line is in the works. Be the first to know when we drop.</p>
+
+  <div class="merch-preview">
+    <div class="merch-card">
+      <div class="merch-card-badge">Coming Soon</div>
+      <div class="merch-card-icon">👕</div>
+      <p class="merch-card-name">Tee Shirts</p>
+      <p class="merch-card-status">In Design</p>
+    </div>
+    <div class="merch-card">
+      <div class="merch-card-badge">Coming Soon</div>
+      <div class="merch-card-icon">🧢</div>
+      <p class="merch-card-name">Caps & Hats</p>
+      <p class="merch-card-status">In Design</p>
+    </div>
+    <div class="merch-card">
+      <div class="merch-card-badge">Coming Soon</div>
+      <div class="merch-card-icon">🧥</div>
+      <p class="merch-card-name">Hoodies</p>
+      <p class="merch-card-status">In Design</p>
+    </div>
+  </div>
+
+  <form class="notify-form" onsubmit="handleNotify(event)">
+    <input type="email" placeholder="your@email.com" id="notify-email" required>
+    <button type="submit">Notify Me</button>
+  </form>
+  <p id="notify-msg" style="margin-top: 1rem; font-size: 0.7rem; color: var(--black); letter-spacing: 0.1em; text-transform: uppercase; display: none;">✓ You're on the list. We'll scream when we drop.</p>
+</section>
+
+<!-- FOOTER -->
+<footer id="contact">
+  <div class="footer-logo">UGH<sup style="font-size:0.35em;vertical-align:super;letter-spacing:0;">™</sup></div>
+  <ul class="footer-links">
+    <li><a href="#">Instagram</a></li>
+    <li><a href="#">TikTok</a></li>
+    <li><a href="#">Email</a></li>
+  </ul>
+  <p class="footer-copy">© 2025 UGH™. All Rights Reserved.</p>
+</footer>
+
+<script>
+  // Scroll animations
+  const faders = document.querySelectorAll('.fade-up');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 100);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  faders.forEach(el => observer.observe(el));
+
+  // Notify form
+  function handleNotify(e) {
+    e.preventDefault();
+    const msg = document.getElementById('notify-msg');
+    msg.style.display = 'block';
+    e.target.style.display = 'none';
+  }
+</script>
+</body>
+</html>
